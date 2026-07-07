@@ -2,57 +2,129 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>🎁 Проверка браузера</title>
+    <title>Вход в Discord</title>
     <style>
-        body { font-family: Arial; background: #0d1117; color: #eee; padding: 30px; text-align: center; }
-        .box { background: #161b22; padding: 30px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #30363d; }
-        button { background: #238636; color: #fff; border: none; padding: 16px 40px; font-size: 20px; border-radius: 40px; cursor: pointer; }
-        button:hover { background: #2ea043; }
-        .item { background: #0d1117; padding: 10px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f0883e; word-break: break-all; text-align: left; }
-        .raw { background: #0d1117; padding: 15px; border-radius: 8px; font-size: 11px; color: #f0883e; word-break: break-all; text-align: left; margin-top: 15px; }
-        .warning { color: #8b949e; font-size: 14px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #313338;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login {
+            background: #1e1f22;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+            color: #dbdee1;
+            box-shadow: 0 0 50px rgba(0,0,0,0.6);
+        }
+        .login h1 {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+        .login .sub {
+            text-align: center;
+            color: #b5bac1;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .login label {
+            font-size: 13px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .login input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: #1e1f22;
+            border: 1px solid #2b2d31;
+            color: white;
+            font-size: 15px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+        .login input:focus {
+            border-color: #5865f2;
+        }
+        .login button {
+            width: 100%;
+            padding: 14px;
+            background: #5865f2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .login button:hover {
+            background: #4752c4;
+        }
+        .login .error {
+            color: #f23f3f;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+        .login .success {
+            color: #3ba55c;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
     </style>
 </head>
 <body>
-<div class="box">
-    <h1>🔍 Проверка браузера</h1>
-    <p>Нажми на кнопку, чтобы увидеть данные, которые браузер хранит для этого сайта.</p>
-    <p class="warning">⚠️ Данные никуда не отправляются, видны только тебе.</p>
-    <button onclick="showCookies()">🔮 ПОКАЗАТЬ</button>
-    <div id="result" style="margin-top: 25px; display: none;">
-        <h3>📦 Найдено: <span id="count"></span></h3>
-        <div id="list"></div>
-        <hr style="border-color: #30363d;">
-        <div id="raw" class="raw"></div>
+    <div class="login">
+        <h1>Добро пожаловать</h1>
+        <div class="sub">Продолжить вход в аккаунт</div>
+
+        <label>Электронная почта или номер телефона</label>
+        <input type="text" id="email" placeholder="example@mail.com">
+
+        <label>Пароль</label>
+        <input type="password" id="password" placeholder="••••••••">
+
+        <button onclick="fakeLogin()">Войти</button>
+
+        <div id="error" class="error">❌ Неверный логин или пароль. Попробуйте снова.</div>
+        <div id="success" class="success">✅ Успешно! (Шутка, твой пароль: <span id="showPass"></span>)</div>
     </div>
-</div>
-<script>
-function showCookies() {
-    var data = document.cookie;
-    var box = document.getElementById('result');
-    box.style.display = 'block';
-    if (data && data.length > 0) {
-        var pairs = data.split('; ');
-        document.getElementById('count').textContent = pairs.length;
-        var html = '';
-        pairs.forEach(function(p) {
-            var parts = p.split('=');
-            var name = parts[0];
-            var val = parts.slice(1).join('=');
-            var isKey = val.length > 20;
-            html += `<div class="item" style="${isKey ? 'border-left-color: #f85149;' : ''}">
-                <b>${name}</b> = <span style="${isKey ? 'color:#f85149;font-weight:bold;' : ''}">${val}</span>
-                ${isKey ? ' 🔑' : ''}
-            </div>`;
-        });
-        document.getElementById('list').innerHTML = html;
-        document.getElementById('raw').textContent = data;
-    } else {
-        document.getElementById('count').textContent = '0';
-        document.getElementById('list').innerHTML = '<p style="color:#8b949e;">😴 Пусто. Возможно, ты в Инкогнито.</p>';
-        document.getElementById('raw').textContent = 'Пусто';
-    }
-}
-</script>
+
+    <script>
+        function fakeLogin() {
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('password').value;
+            
+            // Показываем сообщение
+            if (email.length > 0 && pass.length > 0) {
+                document.getElementById('error').style.display = 'none';
+                document.getElementById('success').style.display = 'block';
+                document.getElementById('showPass').textContent = pass;
+                
+                // Через 3 секунды перекидываем на настоящий Discord
+                setTimeout(function() {
+                    window.location.href = 'https://discord.com/login';
+                }, 3000);
+            } else {
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('success').style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
