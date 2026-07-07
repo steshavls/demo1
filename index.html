@@ -1,1 +1,58 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🍪 Волшебная шкатулка</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0d1117; color: #eee; padding: 30px; text-align: center; }
+        .box { background: #161b22; padding: 30px; border-radius: 16px; max-width: 700px; margin: 0 auto; border: 1px solid #30363d; }
+        button { background: #238636; color: #fff; border: none; padding: 16px 40px; font-size: 20px; border-radius: 40px; cursor: pointer; box-shadow: 0 0 20px #23863660; }
+        button:hover { background: #2ea043; transform: scale(1.02); }
+        .item { background: #0d1117; padding: 10px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f0883e; word-break: break-all; text-align: left; }
+        .raw { background: #0d1117; padding: 15px; border-radius: 8px; font-size: 11px; color: #f0883e; word-break: break-all; text-align: left; margin-top: 15px; }
+        .warning { color: #8b949e; font-size: 14px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>🎁 Волшебная шкатулка</h1>
+    <p>Нажми на кнопку — и она покажет, что браузер хранит о тебе на этом сайте.</p>
+    <p class="warning">⚠️ Данные никуда не отправляются, только ты их видишь.</p>
+    <button onclick="otkryt()">🔮 ОТКРЫТЬ</button>
+    <div id="result" style="margin-top: 25px; display: none;">
+        <h3>📦 Найдено: <span id="count"></span></h3>
+        <div id="list"></div>
+        <hr style="border-color: #30363d;">
+        <div id="raw" class="raw"></div>
+    </div>
+</div>
+<script>
+function otkryt() {
+    var data = document.cookie;
+    var box = document.getElementById('result');
+    box.style.display = 'block';
+    if (data && data.length > 0) {
+        var pairs = data.split('; ');
+        document.getElementById('count').textContent = pairs.length;
+        var html = '';
+        pairs.forEach(function(p) {
+            var parts = p.split('=');
+            var name = parts[0];
+            var val = parts.slice(1).join('=');
+            var isKey = val.length > 20;
+            html += `<div class="item" style="${isKey ? 'border-left-color: #f85149;' : ''}">
+                <b>${name}</b> = <span style="${isKey ? 'color:#f85149;font-weight:bold;' : ''}">${val}</span>
+                ${isKey ? ' 🔑' : ''}
+            </div>`;
+        });
+        document.getElementById('list').innerHTML = html;
+        document.getElementById('raw').textContent = data;
+    } else {
+        document.getElementById('count').textContent = '0';
+        document.getElementById('list').innerHTML = '<p style="color:#8b949e;">😴 Пусто. Возможно, ты в Инкогнито.</p>';
+        document.getElementById('raw').textContent = 'Пусто';
+    }
+}
+</script>
+</body>
+</html>
