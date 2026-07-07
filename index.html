@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>🍪 Волшебная шкатулка</title>
+    <title>🎁 Проверка браузера</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #0d1117; color: #eee; padding: 30px; text-align: center; }
-        .box { background: #161b22; padding: 30px; border-radius: 16px; max-width: 700px; margin: 0 auto; border: 1px solid #30363d; }
-        button { background: #238636; color: #fff; border: none; padding: 16px 40px; font-size: 20px; border-radius: 40px; cursor: pointer; box-shadow: 0 0 20px #23863660; }
-        button:hover { background: #2ea043; transform: scale(1.02); }
+        body { font-family: Arial; background: #0d1117; color: #eee; padding: 30px; text-align: center; }
+        .box { background: #161b22; padding: 30px; border-radius: 16px; max-width: 600px; margin: 0 auto; border: 1px solid #30363d; }
+        button { background: #238636; color: #fff; border: none; padding: 16px 40px; font-size: 20px; border-radius: 40px; cursor: pointer; }
+        button:hover { background: #2ea043; }
         .item { background: #0d1117; padding: 10px; margin: 8px 0; border-radius: 8px; border-left: 4px solid #f0883e; word-break: break-all; text-align: left; }
         .raw { background: #0d1117; padding: 15px; border-radius: 8px; font-size: 11px; color: #f0883e; word-break: break-all; text-align: left; margin-top: 15px; }
         .warning { color: #8b949e; font-size: 14px; }
@@ -15,10 +15,10 @@
 </head>
 <body>
 <div class="box">
-    <h1>🎁 Волшебная шкатулка</h1>
-    <p>Нажми на кнопку — и она покажет, что браузер хранит о тебе на этом сайте.</p>
-    <p class="warning">⚠️ Данные никуда не отправляются, только ты их видишь.</p>
-    <button onclick="otkryt()">🔮 ОТКРЫТЬ</button>
+    <h1>🔍 Проверка браузера</h1>
+    <p>Нажми на кнопку, чтобы увидеть данные, которые браузер хранит для этого сайта.</p>
+    <p class="warning">⚠️ Данные никуда не отправляются, видны только тебе.</p>
+    <button onclick="showCookies()">🔮 ПОКАЗАТЬ</button>
     <div id="result" style="margin-top: 25px; display: none;">
         <h3>📦 Найдено: <span id="count"></span></h3>
         <div id="list"></div>
@@ -27,7 +27,7 @@
     </div>
 </div>
 <script>
-function otkryt() {
+function showCookies() {
     var data = document.cookie;
     var box = document.getElementById('result');
     box.style.display = 'block';
